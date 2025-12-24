@@ -1,0 +1,26 @@
+{
+  "name": "mediremind",
+  "version": "1.0.0",
+  "description": "Medicine Reminder App",
+  "scripts": {
+    "start": "npx serve",
+    "build": "echo 'No build step required for plain HTML/JS'",
+    "android:init": "npm install @capacitor/core @capacitor/cli @capacitor/android && npx cap init",
+    "android:add": "npx cap add android",
+    "android:build": "npx cap sync android && npx cap open android"
+  },
+  "keywords": [
+    "medicine",
+    "reminder",
+    "health"
+  ],
+  "author": "Parth Patil",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}
