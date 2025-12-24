@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediRemind</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <h1>MediRemind</h1>
+                <div class="header-actions">
+                    <button id="history-btn" class="icon-btn" title="History"><i class="fas fa-history"></i></button>
+                    <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                </div>
+            </div>
+            <div class="current-time" id="clock">00:00</div>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <h2>Upcoming</h2>
+                <div id="upcoming-list" class="medicine-list">
+                    <!-- Dynamic Content -->
+                    <div class="empty-state">No upcoming medicines</div>
+                </div>
+            </section>
+
+            <section class="all-medicines">
+                <div class="section-header">
+                    <h2>My Medicines</h2>
+                    <button id="add-btn" class="fab"><i class="fas fa-plus"></i></button>
+                </div>
+                <div id="medicine-list" class="medicine-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Developed by <span class="developer-name">Parth Patil</span></p>
+            <p class="project-info">MediRemind Project | Created in 2025</p>
+        </footer>
+
+        <!-- Add/Edit Modal -->
+        <div id="medicine-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Add Medicine</h2>
+                    <button class="close-btn" id="close-modal">&times;</button>
+                </div>
+                <form id="medicine-form">
+                    <input type="hidden" id="med-id">
+                    
+                    <div class="form-group">
+                        <label for="med-name">Medicine Name</label>
+                        <input type="text" id="med-name" required placeholder="e.g. Aspirin">
+                    </div>
+
+                    <div class="form-group">
+                    <label for="med-time">Time</label>
+                    <input type="time" id="med-time" required>
+                </div>
+
+                <!-- Frequency Selection -->
+                <div class="form-group">
+                    <label>Frequency</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="frequency" value="daily" checked>
+                            <span>Every Day</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="frequency" value="weekly">
+                            <span>Specific Days</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Days Selection (Hidden by default) -->
+                <div id="days-group" class="form-group hidden">
+                    <label>Select Days</label>
+                    <div class="days-selector">
+                        <label><input type="checkbox" value="1"> <span>Mon</span></label>
+                        <label><input type="checkbox" value="2"> <span>Tue</span></label>
+                        <label><input type="checkbox" value="3"> <span>Wed</span></label>
+                        <label><input type="checkbox" value="4"> <span>Thu</span></label>
+                        <label><input type="checkbox" value="5"> <span>Fri</span></label>
+                        <label><input type="checkbox" value="6"> <span>Sat</span></label>
+                        <label><input type="checkbox" value="0"> <span>Sun</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        <label>Alarm Sound Type</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="sound-type" value="preset" checked> Preset</label>
+                            <label><input type="radio" name="sound-type" value="custom"> Custom</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="preset-group">
+                        <label for="med-sound">Select Sound</label>
+                        <select id="med-sound">
+                            <option value="beep">Beep</option>
+                            <option value="chime">Chime</option>
+                            <option value="bell">Bell</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group hidden" id="custom-group">
+                        <label for="custom-file">Upload Ringtone (Max 500KB)</label>
+                        <input type="file" id="custom-file" accept="audio/*">
+                        <input type="hidden" id="custom-sound-data">
+                        <div id="file-name-display" class="file-name"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="med-volume">Volume: <span id="volume-value">100%</span></label>
+                        <input type="range" id="med-volume" min="0" max="100" value="100">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" id="preview-sound" class="small-btn">Play Preview</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="med-notes">Notes (Optional)</label>
+                        <input type="text" id="med-notes" placeholder="e.g. Take with food">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Inventory Tracking</label>
+                        <div class="row">
+                            <div class="col">
+                                <label for="med-stock" class="sub-label">Current Stock</label>
+                                <input type="number" id="med-stock" min="0" placeholder="e.g. 30">
+                            </div>
+                            <div class="col">
+                                <label for="med-low-alert" class="sub-label">Low Alert At</label>
+                                <input type="number" id="med-low-alert" min="0" placeholder="e.g. 5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Medication History</h2>
+                    <button class="close-btn" id="close-history">&times;</button>
+                </div>
+                <div class="history-list" id="history-list">
+                    <!-- Dynamic Content -->
+                    <div class="empty-state">No history yet.</div>
+                </div>
+                <button id="clear-history-btn" class="secondary-btn full-width" style="margin-top: 20px; color: var(--text-color); border-color: var(--text-secondary);">Clear History</button>
+            </div>
+        </div>
+
+        <!-- Alarm Overlay -->
+        <div id="alarm-overlay" class="alarm-overlay hidden">
+            <div class="alarm-content">
+                <i class="fas fa-pills alarm-icon"></i>
+                <h2 id="alarm-med-name">Medicine Time!</h2>
+                <p id="alarm-med-notes"></p>
+                <div class="alarm-actions">
+                    <button id="snooze-btn" class="secondary-btn">Snooze 5m</button>
+                    <button id="take-btn" class="primary-btn">Taken</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements (Using base64 or links to simple sounds would be ideal, for now placeholders) -->
+    <!-- We will generate these sounds using Web Audio API in JS to avoid external dependencies or large files -->
+
+    <script src="script.js"></script>
+</body>
+</html>
