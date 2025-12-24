@@ -405,6 +405,17 @@ input[type="range"] {
     background-color: var(--primary-dark);
 }
 
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.form-actions .primary-btn {
+    width: auto;
+    min-width: 200px;
+}
+
 /* Alarm Overlay */
 .alarm-overlay {
     position: fixed;
