@@ -1,0 +1,6 @@
+{
+  "appId": "com.parthpatil.mediremind",
+  "appName": "MediRemind",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}
